@@ -20,12 +20,16 @@ movies = pickle.load(open('movies.pkl','rb'))
 
 movie_titles = movies['title'].values
 
-st.title('Movie Recommender System')
-
-movie=st.selectbox('Which movie would you like to watch? ',movie_titles)
+st.title('🎬 Movie Recommender System')
+movie = st.selectbox('Which movie would you like to watch?', movie_titles)
 
 if st.button('Recommend'):
-    recommendations=recommend(movie)
+    recommendations, posters = recommend(movie)
     st.subheader("Top 5 Recommendations:")
-    for i, rec in enumerate(recommendations, 1):
-        st.write(f"{i}. {rec}")
+    
+    cols = st.columns(5)
+    for col, title, poster in zip(cols, recommendations, posters):
+        with col:
+            if poster:
+                st.image(poster, use_container_width=True)
+            st.caption(title)
