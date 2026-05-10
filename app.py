@@ -2,28 +2,7 @@ import streamlit as st
 import pickle
 import pandas as pd
 
-def recommend(movie):
-    movie_index =movies[movies['title'] == movie].index[0]
-    if similarity is None:
-       st.error("similarity.pkl file is missing")
-    distances = similarity[movie_index]
-     # to hold the index
-    recommended_movies_list = sorted(list(enumerate(distances)),reverse=True,key=lambda x:x[1])[1:6]
-    recommended_movies=[]
-    
-    for i in recommended_movies_list:
-        #movie_id=i[0]
-        # fetch poster from api
-        recommended_movies.append(movies.iloc[i[0]].title)
-        
-    return recommended_movies
-    
-import os
 
-if os.path.exists('similarity.pkl'):
-    similarity = pickle.load(open('similarity.pkl', 'rb'))
-else:
-    similarity = None
 
 movies = pickle.load(open('movies.pkl','rb'))
 
