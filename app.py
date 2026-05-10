@@ -1,7 +1,12 @@
 import streamlit as st
 import pickle
 import pandas as pd
+import zipfile
+import os
 
+if not os.path.exists("similarity.pkl"):
+    with zipfile.ZipFile("similarity.zip", "r") as zip_ref:
+        zip_ref.extractall(".")
 def recommend(movie):
     movie_index =movies[movies['title'] == movie].index[0]
     distances = similarity[movie_index]
