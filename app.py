@@ -4,6 +4,8 @@ import pandas as pd
 
 def recommend(movie):
     movie_index =movies[movies['title'] == movie].index[0]
+    if similarity is None:
+       st.error("similarity.pkl file is missing")
     distances = similarity[movie_index]
      # to hold the index
     recommended_movies_list = sorted(list(enumerate(distances)),reverse=True,key=lambda x:x[1])[1:6]
@@ -16,7 +18,13 @@ def recommend(movie):
         
     return recommended_movies
     
-similarity=pickle.load(open('similarity.pkl','rb'))       
+import os
+
+if os.path.exists('similarity.pkl'):
+    similarity = pickle.load(open('similarity.pkl', 'rb'))
+else:
+    similarity = None
+
 movies = pickle.load(open('movies.pkl','rb'))
 
 movie_titles = movies['title'].values
